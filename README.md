@@ -8,7 +8,7 @@ Observable W3C Web Components
 
 ``` bash
 
-git clone https://github.com/tachyon1337/elliptical-component.git
+git clone https://github.com/ellipticaljs/component.git
 npm install
 gulp build
 
@@ -26,7 +26,7 @@ bower install elliptical-component
 
 ``` bash
 
-git clone https://github.com/tachyon1337/elliptical-component.git
+git clone https://github.com/ellipticaljs/component.git
 npm install
 gulp build
 bower install
