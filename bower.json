@@ -1,7 +1,7 @@
 {
   "name": "elliptical-component",
   "description": "Observable web components",
-  "version": "1.0.7",
+  "version": "1.0.8",
   "main": "dist/elliptical.component.js",
   "authors": [
     "S. Francis"
@@ -12,14 +12,34 @@
     "web",
     "components"
   ],
-  "homepage": "https://github.com/tachyon1337/elliptical-component",
+  "homepage": "https://github.com/ellipticaljs/component",
   "moduleType": [],
   "ignore": [
     "**/.*",
     "node_modules",
     "bower_components",
     "test",
-    "tests"
+    "tests",
+    ".gitignore",
+    ".npmignore",
+    "gulpfile.js",
+    "lib",
+    "docs",
+    "index.js",
+    "umd.js",
+    "package.json",
+    "demo",
+    "index.html",
+    "build.json",
+    "bundle.json",
+    ".nvmrc",
+    ".eslintrc",
+    "bin",
+    "CHANGELOG.md",
+    "demos",
+    "stylesheets",
+    "_index.scss",
+    "bk"
   ],
   "dependencies": {
     "observable-component": "~1.0.2",

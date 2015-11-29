@@ -1,26 +1,26 @@
 {
   "name": "elliptical-component",
   "description": "Observable web components",
-  "version": "1.0.7",
+  "version": "1.0.8",
   "author": "S. Francis",
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/tachyon1337/elliptical-component.git"
+    "url": "https://github.com/ellipticaljs/component.git"
   },
   "dependencies":{
     "webcomponentsjs": "git+https://github.com/webcomponents/webcomponentsjs.git",
-    "elliptical-utils":"git+https://github.com/tachyon1337/elliptical-utils.git",
-    "elliptical-event":"git+https://github.com/tachyon1337/elliptical-event.git",
-    "dustjs":"git+https://github.com/tachyon1337/dustjs.git",
-    "elliptical-dust-helpers":"git+https://github.com/tachyon1337/elliptical-dust-helpers.git",
-    "elliptical-jquery": "git+https://github.com/tachyon1337/jquery.git",
-    "elliptical-jquery-ui": "git+https://github.com/tachyon1337/jquery-ui.git",
-    "jquery-extensions":"git+https://github.com/tachyon1337/jquery-extensions.git",
-    "jquery-mutation-summary":"git+https://github.com/tachyon1337/jquery-mutation-summary.git",
-    "elliptical-mutation-summary":"git+https://github.com/tachyon1337/elliptical-mutation-summary.git",
-    "component-extensions": "git+https://github.com/tachyon1337/component-extensions.git",
-    "observable-component": "git+https://github.com/tachyon1337/observable-component.git"
+    "elliptical-utils":"git+https://github.com/ellipticaljs/utils.git",
+    "elliptical-event":"git+https://github.com/ellipticaljs/event.git",
+    "dustjs":"git+https://github.com/ellipticaljs/dustjs.git",
+    "elliptical-dust-helpers":"git+https://github.com/ellipticaljs/dust-helpers.git",
+    "elliptical-jquery": "git+https://github.com/ellipticaljs/jquery.git",
+    "elliptical-jquery-ui": "git+https://github.com/ellipticaljs/jquery-ui.git",
+    "jquery-extensions":"git+https://github.com/ellipticaljs/jquery-extensions.git",
+    "jquery-mutation-summary":"git+https://github.com/ellipticaljs/jquery-mutation-summary.git",
+    "elliptical-mutation-summary":"git+https://github.com/ellipticaljs/mutation-summary.git",
+    "component-extensions": "git+https://github.com/ellipticaljs/component-extensions.git",
+    "observable-component": "git+https://github.com/ellipticaljs/observable-component.git"
 
   },
   "devDependencies": {
