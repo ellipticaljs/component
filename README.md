@@ -10,7 +10,6 @@ Observable W3C Web Components
 
 git clone https://github.com/ellipticaljs/component.git
 npm install
-gulp build
 
 ```
 
@@ -28,7 +27,6 @@ bower install elliptical-component
 
 git clone https://github.com/ellipticaljs/component.git
 npm install
-gulp build
 bower install
 gulp demo
 python -m SimpleHTTPServer 8080
@@ -36,4 +34,4 @@ python -m SimpleHTTPServer 8080
 
 ```
 
-browser: localhost:8080/demo.html
+browser: localhost:8080
