@@ -13,6 +13,8 @@
     }
 }(this, function (utils, extensions) {
 
+    var array=utils.array;
+
     /** options */
     var options = {
         $providers: {
@@ -659,17 +661,37 @@
 
     });
 
-
-
     /// a factory wrapper that returns an $.element factory for the supplied base function
-    /// the $.element factory will register the element as a jquery ui widget with baseObject or base(if base is not undefined);
-    /// register the element as a W3C custom element (document.registerElement)
+    /// (i) the $.element factory will register the element as a jquery ui widget with supplied baseObject
+    /// (ii) register the element as a W3C custom element (document.registerElement)
+    /**
+     *
+     * @param {object} baseObject
+     * @returns {function}
+     */
     $.elementFactory=function(baseObject){
 
-        return function (ElementProto,name,tagName, base, prototype) {
+        /**
+         * NOTE: (i)  mixins array(of objects) are "mixed" with the prototype
+         *            however, if mixins is an object(instead of an array), that object is interpreted as an overriding
+         *            baseObject and injected into the jquery ui widget factory accordingly
+         *       (ii) tag is split and parsed for the jquery ui namespace: $.tag[0].tag[0]tag[1]...tag[N]
+         *            the name is the camel cased tagName; the namespace is the zero index in the split tagname
+         *            e.g: hello-my-world --> $.hello.helloMyWorld
+         *            declarative tag creates a imperative jquery plugin
+         *            eg: <hello-my-world> --> $(element).helloMyWorld()
+         *                <my-tag> --> $(element).myTag()
+         *
+         *  @param {object} ElementProto
+         *  @param {string} tag
+         *  @param {array} mixins
+         *  @param {object} prototype
+         *  @public
+         */
+        return function (ElementProto,tag,mixins, prototype) {
 
-            //widget base object
-            var base_= null;
+            //mixins
+            var mixins_= null;
             //widget string namespace
             var name_=null;
             //registered element tag name
@@ -681,84 +703,49 @@
 
             var objName;
 
-            /* support 2-5 params */
+            /* support 2-4 params */
             var length=arguments.length;
-            if(length < 2){
-                throw "Error: Element requires a minimum of two parameter types: string name and a singleton for the prototype"
-            }else if(length===2){
-                prototype_ = name;
-                if(typeof ElementProto==='object'){
-                    throw "Error: Element requires a string name parameter";
-                }
-                if(typeof name!=='object'){
-                    throw "Error: Element requires a singleton for the prototype";
-                }
+            if(length < 2) throw "Error: Element requires a minimum of two parameter types: tag name and a singleton for the prototype";
+            else if(length===2){
+                prototype_ = tag;
+                if(typeof ElementProto==='object') throw "Error: Element requires a string name parameter";
+                if(typeof tag!=='object') throw "Error: Element requires a singleton for the prototype";
                 objName=parseElementNameParams(ElementProto);
+                if(objName.err) throw "Error: Element requires a string tag name and a prototype";
                 name_=objName.name;
-                tagName_=objName.tagName;
-                if(objName.err){
-                    throw "Error: Element requires a string tag name or a namespaced name";
-                }
+                tagName_=ElementProto;
             }else if(length===3){
-                prototype_=tagName;
+                prototype_=mixins;
                 if(typeof ElementProto==='object'){
-                    if(typeof name!=='string'){
-                        throw "Error: Element requires a string name parameter";
-                    }
-                    if(typeof tagName!=='object'){
-                        throw "Error: Element requires a singleton for the prototype";
-                    }
+                    if(typeof tag!=='string') throw "Error: Element requires a string tag name";
+                    if(typeof mixins!=='object') throw "Error: Element requires a singleton for the prototype";
                     ElementProto_=ElementProto;
-                    objName=parseElementNameParams(name);
+                    objName=parseElementNameParams(tag);
                     name_=objName.name;
-                    tagName_=objName.tagName;
+                    tagName_=tag;
                 }else{
-                    if(typeof name!=='string'){
-                        objName=parseElementNameParams(ElementProto);
-                        name_=objName.name;
-                        tagName_=objName.tagName;
-                        base_=name;
-                    }else{
-                        name_=ElementProto;
-                        tagName_=name;
-                    }
-                }
-            }else if(length===4){
-                prototype_=base;
-                if(typeof ElementProto==='object'){
-                    ElementProto_=ElementProto;
-                    if(typeof name!=='string'){
-                        throw "Error: Element requires a string name parameter or tag name";
-                    }
-                    if(typeof tagName==='string'){
-                        name_=name;
-                        tagName_=tagName;
-                    }else{
-                        objName=parseElementNameParams(name);
-                        name_=objName.name;
-                        tagName_=objName.tagName;
-                        base_=tagName;
-                    }
-                }else{
-                    name_=ElementProto;
-                    tagName_=name;
-                    base_=tagName;
+                    tagName_=ElementProto;
+                    mixins_=tag;
+                    objName=parseElementNameParams(ElementProto);
+                    name_=objName.name;
                 }
             }else{
                 prototype_=prototype;
                 ElementProto_=ElementProto;
-                name_=name;
                 tagName_=tagName;
-                base_=base;
+                mixins_=mixins;
+                objName=parseElementNameParams(tag);
+                name_=objName.name;
             }
 
-
-            if(!base_){
-                base_=baseObject;
-            }
-
-            if(!tagName_){
-                tagName_=name_.replace('.','-');
+            //mixins
+            if(mixins_){
+                if(!array.isArray(mixins_)) baseObject=mixins_;
+                else{
+                    mixins_.forEach(function(obj){
+                        Object.assign(prototype_,obj);
+                    });
+                }
             }
 
 
@@ -769,11 +756,14 @@
                 ElementProto_=__proto__;
             }
 
+            ///ensure baseObjects have valid tag names
+            tagName_=tagName_.replace('.','-');
+
             //store the tagName as a "private variable" on the singleton
             prototype_._tagName=tagName_;
 
             /* implement using the extended jQuery UI factory */
-            $.widget(name_, base_, prototype_);
+            $.widget(name_, baseObject, prototype_);
 
             //method Name from namespaced name
             var methodName=name_.split('.')[1];
@@ -784,8 +774,6 @@
             }catch(ex){
 
             }
-
-
         };
     };
 
@@ -810,6 +798,7 @@
 
         $.extend($.elliptical.element.prototype,proto);
     };
+
 
     /// PRIVATE----------------------------------------------------------------------------------------------
 

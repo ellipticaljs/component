@@ -55,6 +55,7 @@ gulp.task('demo',function(){
     fileStream('./demo/observable-detail/**/*.*',BOWER + '/observable-detail');
     fileStream('./demo/observable-list/**/*.*',BOWER + '/observable-list');
     fileStream('./elliptical-component.html',BOWER_EC);
+    fileStream('./demo/index.html','./');
     fileStream(CSS,BOWER_EC_DIST);
     fileStream(WEB_COMPONENTS,BOWER_EC_DIST);
     concatFileStream(BOOTSTRAP,BOWER_EC_DIST,BOOTSTRAP_NAME);
