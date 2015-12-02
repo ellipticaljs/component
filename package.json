@@ -1,7 +1,7 @@
 {
   "name": "elliptical-component",
   "description": "Observable web components",
-  "version": "1.0.11",
+  "version": "1.0.12",
   "author": "S. Francis",
   "license": "MIT",
   "repository": {
@@ -21,7 +21,6 @@
     "elliptical-mutation-summary":"git+https://github.com/ellipticaljs/mutation-summary.git",
     "component-extensions": "git+https://github.com/ellipticaljs/component-extensions.git",
     "observable-component": "git+https://github.com/ellipticaljs/observable-component.git"
-
   },
   "devDependencies": {
     "gulp": "^3.8.7",

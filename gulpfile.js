@@ -6,7 +6,7 @@ var gulp=require('gulp'),
     BUILD_NAME='elliptical.component.js',
     MIN_NAME='elliptical.component.min.js',
     REPO_NAME='elliptical component',
-    WEB_COMPONENTS='./dist/webcomponents-lite.js',
+    WEB_COMPONENTS='./dist/webcomponents.js',
     CSS ='./node_modules/component-extensions/dist/styles.css',
     BOOTSTRAP='./lib/init.js',
     BOOTSTRAP_NAME='elliptical.init.js',
@@ -20,7 +20,7 @@ var gulp=require('gulp'),
 
 
 gulp.task('default',function(){
-    console.log(REPO_NAME + ' ..."tasks: gulp build|minify|bundle|demo"');
+    console.log(REPO_NAME + ' ..."tasks: gulp build|minify|bundle|css|web-components|web-components-css|demo"');
 });
 
 gulp.task('build',function(){
@@ -32,7 +32,7 @@ gulp.task('build',function(){
 
 gulp.task('minify',function(){
     fileStream(CSS,DIST);
-    fileStream(BOOTSTRAP,DIST,BOOTSTRAP_NAME);
+    concatFileStream(BOOTSTRAP,DIST,BOOTSTRAP_NAME);
     concatStream(MIN_NAME)
         .pipe(uglify())
         .pipe(gulp.dest(DIST));
@@ -58,10 +58,22 @@ gulp.task('demo',function(){
     fileStream('./demo/index.html','./');
     fileStream(CSS,BOWER_EC_DIST);
     fileStream(WEB_COMPONENTS,BOWER_EC_DIST);
-    concatFileStream(BOOTSTRAP,BOWER_EC_DIST,BOOTSTRAP_NAME);
     concatStream(BUILD_NAME)
         .pipe(gulp.dest(BOWER_EC_DIST));
 });
+
+gulp.task('css',function(){
+    concatFileStream(['./lib/css-elements.js','./lib/css-register.js'],DIST,'css-register.js');
+});
+
+gulp.task('webcomponents-css',function(){
+    concatFileStream(['./lib/css-elements.js','./lib/css-register.js','./dist/webcomponents-lite.js'],DIST,'webcomponents-css.js');
+});
+
+gulp.task('webcomponents',function(){
+    concatFileStream(['./lib/init.js','./dist/webcomponents-lite.js'],DIST,'webcomponents.js');
+});
+
 
 function srcStream(src){
     if(src===undefined) src=BUILD_JSON;

@@ -3,15 +3,90 @@
 (function (root, factory) {
     if (typeof module !== 'undefined' && module.exports) {
         //commonjs
-        module.exports = factory(require('elliptical-utils'), require('component-extensions'));
+        module.exports = factory();
     } else if (typeof define === 'function' && define.amd) {
         // AMD. Register as an anonymous module.
-        define(['elliptical-utils', 'component-extensions'], factory);
+        define([], factory);
     } else {
         // Browser globals (root is window)
-        root.returnExports = factory(elliptical.utils, elliptical.extensions);
+        root.elliptical=root.elliptical || {};
+        root.elliptical.cssElements=factory();
+        root.returnExports = root.elliptical.cssElements;
     }
-}(this, function (utils, extensions) {
+}(this, function () {
+
+    return {
+        registered:false,
+        elements:['ui-container',
+            'ui-overlay',
+            'ui-modal',
+            'ui-menu',
+            'menu-item',
+            'ui-brand',
+            'ui-toggle',
+            'menu-item-dropdown',
+            'menu-item-search',
+            'menu-divider',
+            'grid-row',
+            'grid-columns',
+            'ui-select',
+            'ui-input-icon',
+            'flex-table',
+            'ui-dropdown',
+            'ui-mega-dropdown',
+            'ui-media-object',
+            'ui-box',
+            'ui-breadcrumb',
+            'breadcrumb-item',
+            'ui-radio-list',
+            'ui-checkbox-list',
+            'flex-box',
+            'flex-list',
+            'flex-label',
+            'ui-badge',
+            'ui-tip',
+            'ui-columns',
+            'column-item',
+            'ui-social',
+            'social-icon',
+            'touch-ui-drawer',
+            'touch-ui-menu',
+            'touch-ui-dropdown',
+            'touch-ui-toggle',
+            'touch-ui-brand',
+            'touch-icons',
+            'touch-icon',
+            'ui-icons',
+            'screen-icon'
+        ],
+
+        register:function(){
+            if(this.registered) return;
+            if(!document.registerElement) return;
+            this.registered=true;
+            var elements=this.elements;
+            elements.forEach(function(element){
+                document.registerElement(element);
+            });
+        }
+    };
+
+}));
+
+//umd pattern
+
+(function (root, factory) {
+    if (typeof module !== 'undefined' && module.exports) {
+        //commonjs
+        module.exports = factory(require('elliptical-utils'), require('component-extensions'),require('./css-elements'));
+    } else if (typeof define === 'function' && define.amd) {
+        // AMD. Register as an anonymous module.
+        define(['elliptical-utils', 'component-extensions','./css-elements'], factory);
+    } else {
+        // Browser globals (root is window)
+        root.returnExports = factory(root.elliptical.utils, root.elliptical.extensions,root.elliptical.cssElements);
+    }
+}(this, function (utils, extensions,css) {
 
     var array=utils.array;
 
@@ -24,55 +99,6 @@
         },
         mqMaxWidth: 1024
     };
-
-    /**
-     * array of css only custom elements
-     * @type {string[]}
-     */
-    var cssCustomElements = ['ui-container',
-        'ui-overlay',
-        'ui-modal',
-        'ui-menu',
-        'menu-item',
-        'ui-brand',
-        'ui-toggle',
-        'menu-item-dropdown',
-        'menu-item-search',
-        'menu-divider',
-        'grid-row',
-        'grid-columns',
-        'ui-select',
-        'ui-input-icon',
-        'flex-table',
-        'ui-dropdown',
-        'ui-mega-dropdown',
-        'ui-media-object',
-        'ui-box',
-        'ui-breadcrumb',
-        'breadcrumb-item',
-        'ui-radio-list',
-        'ui-checkbox-list',
-        'flex-box',
-        'flex-list',
-        'flex-label',
-        'ui-badge',
-        'ui-tip',
-        'ui-columns',
-        'column-item',
-        'ui-social',
-        'social-icon',
-        'touch-ui-drawer',
-        'touch-ui-menu',
-        'touch-ui-dropdown',
-        'touch-ui-toggle',
-        'touch-ui-brand',
-        'touch-icons',
-        'touch-icon',
-        'ui-icons',
-        'screen-icon',
-        'touch-template',
-        'empty-template'
-    ];
 
     //extend options
     $.extend($.Widget.prototype.options, options);
@@ -783,7 +809,7 @@
 
 
     ///css custom element registration
-    registerCssCustomElements();
+    css.register();
 
     /* make public props/methods available on $.element */
     for(var key in $.widget){
@@ -970,15 +996,6 @@
         }
     }
 
-
-    /**
-     *  preregisters css custom elements
-     */
-    function registerCssCustomElements(){
-        cssCustomElements.forEach(function (t) {
-            registerElement(t);
-        });
-    }
 
 
     return $;
