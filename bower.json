@@ -1,7 +1,7 @@
 {
   "name": "elliptical-component",
   "description": "Observable web components",
-  "version": "1.0.12",
+  "version": "1.0.13",
   "main": "dist/elliptical.component.js",
   "authors": [
     "S. Francis"

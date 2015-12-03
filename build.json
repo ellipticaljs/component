@@ -1,6 +1,6 @@
 [
-  "./lib/css-elements.js",
+  "./node_modules/elliptical-css-register/lib/css-elements.js",
   "./lib/element.js",
   "./lib/component.js",
-  "./lib/distribution.js"
+  "./lib/parser.js"
 ]

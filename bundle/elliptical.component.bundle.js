@@ -19063,10 +19063,10 @@ return $.widget;
 (function (root, factory) {
     if (typeof module !== 'undefined' && module.exports) {
         //commonjs
-        module.exports = factory(require('elliptical-utils'), require('component-extensions'),require('./css-elements'));
+        module.exports = factory(require('elliptical-utils'), require('component-extensions'),require('elliptical-css-register'));
     } else if (typeof define === 'function' && define.amd) {
         // AMD. Register as an anonymous module.
-        define(['elliptical-utils', 'component-extensions','./css-elements'], factory);
+        define(['elliptical-utils', 'component-extensions','elliptical-css-register'], factory);
     } else {
         // Browser globals (root is window)
         root.returnExports = factory(root.elliptical.utils, root.elliptical.extensions,root.elliptical.cssElements);

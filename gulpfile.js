@@ -20,7 +20,7 @@ var gulp=require('gulp'),
 
 
 gulp.task('default',function(){
-    console.log(REPO_NAME + ' ..."tasks: gulp build|minify|bundle|css|web-components|web-components-css|demo"');
+    console.log(REPO_NAME + ' ..."tasks: gulp build|minify|bundle|web-components|demo"');
 });
 
 gulp.task('build',function(){
@@ -62,13 +62,7 @@ gulp.task('demo',function(){
         .pipe(gulp.dest(BOWER_EC_DIST));
 });
 
-gulp.task('css',function(){
-    concatFileStream(['./lib/css-elements.js','./lib/css-register.js'],DIST,'css-register.js');
-});
 
-gulp.task('webcomponents-css',function(){
-    concatFileStream(['./lib/css-elements.js','./lib/css-register.js','./dist/webcomponents-lite.js'],DIST,'webcomponents-css.js');
-});
 
 gulp.task('webcomponents',function(){
     concatFileStream(['./lib/init.js','./dist/webcomponents-lite.js'],DIST,'webcomponents.js');
