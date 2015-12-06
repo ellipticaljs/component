@@ -1051,10 +1051,6 @@
     };
 
     var pubSub=observable.pubsub;
-    pubSub._initPubSubElement=function(){
-        this._data.set('subscriptions',[]);
-        this._subscriptions();
-    };
 
     var scope=observable.scope;
     var scopeOptions={
@@ -1101,6 +1097,7 @@
             this.$viewBag=context;
             this.__setScope();
             this._initComponent();
+            this._bindSubscriptions();
             this.__subscriber();
             this.__publisher();
         },
