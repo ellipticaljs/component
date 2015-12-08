@@ -21,17 +21,8 @@ bower install elliptical-component
 
 ```
 
-##demo
+##demo and docs
 
-``` bash
-
-git clone https://github.com/ellipticaljs/component.git
-npm install
-bower install
-gulp demo
-python -m SimpleHTTPServer 8080
+http://ellipticaljs.github.io/component/
 
 
-```
-
-browser: localhost:8080
