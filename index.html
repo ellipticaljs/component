@@ -18,10 +18,8 @@
 <section>
     <link rel="import" href="demo_components/mark-down/mark-down.html">
     <link rel="import" href="demo_components/elliptical-component/elliptical-component.html">
-    <!-- NOTE: template element transposition handled by elliptical requires an attribute of property="elliptical"  -->
     <link rel="import" href="demo_components/hello-world/hello-world.html" property="elliptical">
     <link rel="import" href="demo_components/observable-list/observable-list.html" property="elliptical">
-    <link rel="import" href="demo_components/observable-detail/observable-detail.html" property="elliptical">
     <link rel="import" href="demo_components/profile-template/profile-template.html" property="elliptical">
     <grid-row>
         <grid-columns class="default-12">
@@ -325,6 +323,23 @@
 
                 ```
             </mark-down>
+
+            <h4 class="margin-top two">HTML Imports and Element Template Transposition</h4>
+            <hr>
+            <blockquote class="warning margin-top two">
+                <span class="bold">NOTE: </span> In order to ensure no conflicts using multiple web component libraries simultaneously vis a vis HTML Imports and element
+                template transposition, HTML Imports for elliptical elements should have a property="elliptical" in the tag.
+            </blockquote>
+            <mark-down>
+                ```html
+                <xmp>
+                <link rel="import" href="bower_components/my-elliptical-component/my-elliptical-component.html" property="elliptical">
+                </xmp>
+
+                ```
+            </mark-down>
+
+            <p class="margin-top two">This constraint only applies for importing elements.</p>
 
             <h4 class="margin-top two">Properties and Attributes</h4>
             <hr>
@@ -891,7 +906,7 @@
             to the model and you do not have--by definition--"reusable components." </p>
             <blockquote class="info margin-top two">
                 <span class="bold">NOTE:</span> The template attribute can be set on the custom element itself or on a child element.<br><br>
-                <span class="bold">FURTHER NOTE:</span> The template attribute can be set in the definition or the instance
+                <span class="bold">FURTHER NOTE:</span> The template attribute can be set in the definition or the instance.
             </blockquote>
             <mark-down class="margin-top two">
                 ```html
@@ -1463,8 +1478,8 @@
 <footer>
     <h5>Component Demo</h5>
     <flex-box class="links">
-        <a href="https://github.com/ellipticaljs/paper-autocomplete/tree/master/demo">Demo Source</a>
-        <a href="https://github.com/ellipticaljs/paper-autocomplete">Project Home</a>
+        <a href="https://github.com/ellipticaljs/component/tree/gh-pages">Demo Source</a>
+        <a href="https://github.com/ellipticaljs/component">Project Home</a>
     </flex-box>
 </footer>
 <script>
@@ -1479,10 +1494,6 @@
     Elliptical.viewData.set('address',address);
     Elliptical(function(){
         var observableList=document.querySelector('observable-list');
-        console.log(observableList.$scope);
-        observableList.onScopeChange(function(result){
-            console.log(result);
-        });
     });
 </script>
 </body>
