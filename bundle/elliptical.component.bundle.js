@@ -19693,7 +19693,7 @@ return $.widget;
             }
             obj.selector = selector;
             obj.callback = callback;
-            var arr = this._events;
+            var arr = this._data.events;
             if ($.inArray(obj, arr) === -1) this._data.events.push(obj);
             if (selector) {
                 element.on(event, selector, function () {
