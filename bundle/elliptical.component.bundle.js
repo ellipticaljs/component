@@ -19782,7 +19782,6 @@ return $.widget;
             this._triggerEvent('destroyed',this.element);
             this._unbindEvents();
             this._dispose();
-            this._onDestroy();
             $.removeData(this.element[0],'custom-' + this.widgetName);
             this._data._store=null;
             this._data.events.length=0;
@@ -19833,22 +19832,12 @@ return $.widget;
         _attributeChanged: $.noop,
 
 
-        /**
-         * for cleanup
-         * @private
-         */
-        _dispose:function(){
-            if(this._super){
-                this._super();
-            }
-        },
-
 
         /**
          * for cleanup
          * @private
          */
-        _onDestroy: $.noop,
+        _dispose: $.noop,
 
 
         ////--public-------------------
