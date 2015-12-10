@@ -593,7 +593,8 @@
             }else if(length===2){
                 var selector=eventParams[0];
                 event=this.__getEvent(eventParams[1]);
-                if(selector==='document' || selector==='window') this._event($(selector),event,this[method].bind(this));
+                if(selector==='document') this._event($(document),event,this[method].bind(this));
+                if(selector==='window') this._event($(window),event,this[method].bind(this));
                 else this._event(this.element,event,selector,this[method].bind(this))
             }
         },
