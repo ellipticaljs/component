@@ -19403,8 +19403,17 @@ return $.widget;
          * @returns {string}
          * @private
          */
-        _press:function(){
+        __press:function(){
             return ('ontouchend' in document) ? 'touchend' : 'click';
+        },
+
+        /**
+         *
+         * @returns {string}
+         * @private
+         */
+        __tap:function(){
+            return ('ontouchend' in document) ? 'tap' : 'click';
         },
 
         /**
@@ -19423,6 +19432,7 @@ return $.widget;
             this.__componentCallbacks();
             this._bindOptionsToPrototypes();
             this.__bindPressEvent();
+            this.__bindTapEvent();
             this._initElement();
             this.__onInit();
             this._bindPublicPropsToElement();
@@ -19581,7 +19591,8 @@ return $.widget;
          */
         __getEvent:function(evt){
             if(evt==='click') return this._data.click;
-            else if(evt==='press') return this._press();
+            else if(evt==='press') return this.__press();
+            else if(evt==='tap') return this.__tap();
             else return evt;
         },
 
@@ -19618,7 +19629,17 @@ return $.widget;
             var self=this;
             var data=this._data;
             Object.defineProperty(data, 'press', {
-                get: function() { return self._press(); },
+                get: function() { return self.__press(); },
+                enumerable: true,
+                configurable: true
+            });
+        },
+
+        __bindTapEvent:function(){
+            var self=this;
+            var data=this._data;
+            Object.defineProperty(data, 'tap', {
+                get: function() { return self.__tap(); },
                 enumerable: true,
                 configurable: true
             });
