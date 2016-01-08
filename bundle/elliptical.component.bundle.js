@@ -20519,6 +20519,35 @@ return $.widget;
     var READY_COUNT=0;
     var LINK_IMPORT_MAX_CHECK=40;
 
+    var PolyFill= {
+        template: function (d) {  //polyfills html5 template (IE & safari) http://jsfiddle.net/brianblakely/h3EmY/
+            if (d.content) {
+                return false;
+            }
+
+            var qPlates = d.getElementsByTagName('template'),
+                plateLen = qPlates.length,
+                elPlate,
+                qContent,
+                contentLen,
+                docContent;
+
+            for (var x = 0; x < plateLen; ++x) {
+                elPlate = qPlates[x];
+                qContent = elPlate.childNodes;
+                contentLen = qContent.length;
+                docContent = d.createDocumentFragment();
+
+                while (qContent[0]) {
+                    docContent.appendChild(qContent[0]);
+                }
+
+                elPlate.content = docContent;
+            }
+
+
+        }
+    };
 
 
     var Events={
@@ -20533,13 +20562,16 @@ return $.widget;
 
     var Listener={
         start:function(){
-            $(document).on(ON_DOCUMENT_ADDED_MUTATION,this.on.bind(this));
+            $(document).on(ON_DOCUMENT_MUTATION,this.on.bind(this));
         },
 
-        on:function(added){
+        on:function(event,summary){
             setTimeout(function(){
-                Parser.linkImportMutations(added);
-                Parser.customElementMutations(added);
+                var added=summary.added;
+                if(added && summary.added.length > 0){
+                    Parser.linkImportMutations(added);
+                    Parser.customElementMutations(added);
+                }
             },QUEUE_TIMEOUT);
         }
     };
@@ -20899,7 +20931,7 @@ return $.widget;
             if (!doc) {
                 doc = DOM.parser(templateStr);
             }
-            //PolyFill.template(doc);
+            PolyFill.template(doc);//ie 11
             return doc.querySelector('template');
         },
 
